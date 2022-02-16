@@ -1,0 +1,171 @@
+{
+    "libraryInformation": {
+        "tenantId": "fs09000000",
+        "okapiUrl": "https://okapi-bugfest-kiwi.folio.ebsco.com",
+        "okapiUsername": "folio",
+        "libraryName": "FOLIO Reference env",
+        "logLevelDebug": false,
+        "folioRelease": "kiwi",
+        "addTimeStampToFileNames": false,
+        "iterationIdentifier": "test_run"
+    },
+    "migrationTasks": [
+        {
+            "name": "transform_bibs",
+            "migrationTaskType": "BibsTransformer",
+            "useTenantMappingRules": true,
+            "ilsFlavour": "tag001",
+            "tags_to_delete": [
+                "841",
+                "852"
+            ],
+            "files": [
+                {
+                    "file_name": "bibs.mrc",
+                    "suppressed": false
+                }
+            ]
+        },
+        {
+            "name": "post_bibs",
+            "migrationTaskType": "BatchPoster",
+            "objectType": "Instances",
+            "batchSize": 250,
+            "file": {
+                "file_name": "folio_instances_test_run_transform_bibs.json"
+            }
+        },
+        {
+            "name": "post_srs_bibs",
+            "migrationTaskType": "BatchPoster",
+            "objectType": "SRS",
+            "batchSize": 250,
+            "file": {
+                "file_name": "folio_srs_instances_test_run_transform_bibs.json"
+            }
+        },
+        {
+            "name": "transform_mfhd",
+            "migrationTaskType": "HoldingsMarcTransformer",
+            "mfhdMappingFileName": "mfhd_rules.json",
+            "locationMapFileName": "locations.tsv",
+            "defaultCallNumberTypeName": "Library of Congress classification",
+            "defaultHoldingsTypeId": "03c9c400-b9e3-4a07-ac0e-05ab470233ed",
+            "useTenantMappingRules": false,
+            "hridHandling": "default",
+            "createSourceRecords": true,
+            "files": [
+                {
+                    "file_name": "holding.mrc",
+                    "suppressed": false
+                }
+            ]
+        },
+        {
+            "name": "post_holdingsrecords_from_mfhd",
+            "migrationTaskType": "BatchPoster",
+            "objectType": "Holdings",
+            "batchSize": 250,
+            "file": {
+                "file_name": "folio_holdings_test_run_transform_mfhd.json"
+            }
+        },
+        {
+            "name": "post_srs_mfhds",
+            "migrationTaskType": "BatchPoster",
+            "objectType": "SRS",
+            "batchSize": 250,
+            "file": {
+                "file_name": "folio_srs_holdings_test_run_transform_mfhd.json"
+            }
+        },
+        {
+            "name": "transform_csv_holdings",
+            "migrationTaskType": "HoldingsCsvTransformer",
+            "holdingsMapFileName": "holdingsrecord_mapping.json",
+            "locationMapFileName": "locations.tsv",
+            "defaultCallNumberTypeName": "Library of Congress classification",
+            "callNumberTypeMapFileName": "call_number_type_mapping.tsv",
+            "holdingsMergeCriteria": "clb",
+            "defaultHoldingsTypeId": "03c9c400-b9e3-4a07-ac0e-05ab470233ed",
+            "hridHandling": "default",
+            "files": [
+                {
+                    "file_name": "items.tsv"
+                }
+            ]
+        },
+        {
+            "name": "post_csv_holdings",
+            "migrationTaskType": "BatchPoster",
+            "objectType": "Holdings",
+            "batchSize": 250,
+            "file": {
+                "file_name": "folio_holdings_test_run_transform_csv_holdings.json"
+            }
+        },
+        {
+            "name": "transform_csv_items",
+            "migrationTaskType": "ItemsTransformer",
+            "locationMapFileName": "locations.tsv",
+            "itemsMappingFileName": "item_mapping_for_csv_items.json",
+            "defaultCallNumberTypeName": "Library of Congress classification",
+            "callNumberTypeMapFileName": "call_number_type_mapping.tsv",
+            "materialTypesMapFileName": "material_types_csv.tsv",
+            "loanTypesMapFileName": "loan_types_csv.tsv",
+            "itemStatusesMapFileName": "item_statuses.tsv",
+            "defaultHoldingsTypeId": "03c9c400-b9e3-4a07-ac0e-05ab470233ed",
+            "hridHandling": "default",
+            "files": [
+                {
+                    "file_name": "csv_items.tsv"
+                }
+            ]
+        },
+        {
+            "name": "post_csv_items",
+            "migrationTaskType": "BatchPoster",
+            "objectType": "Items",
+            "batchSize": 250,
+            "file": {
+                "file_name": "folio_items_test_run_transform_csv_items.json"
+            }
+        },
+        {
+            "name": "transform_mfhd_items",
+            "migrationTaskType": "ItemsTransformer",
+            "hridHandling": "default",
+            "defaultCallNumberTypeName": "Library of Congress classification",
+            "itemsMappingFileName": "item_mapping_for_mfhd_attached_items.json",
+            "locationMapFileName": "locations.tsv",
+            "materialTypesMapFileName": "material_types.tsv",
+            "loanTypesMapFileName": "loan_types.tsv",
+            "statisticalCodesMapFileName": "statcodes.tsv",
+            "callNumberTypeMapFileName": "call_number_type_mapping.tsv",
+            "files": [
+                {
+                    "file_name": "items_linked_to_mfhds.csv"
+                }
+            ]
+        },
+        {
+            "name": "post_mfhd_items",
+            "migrationTaskType": "BatchPoster",
+            "objectType": "Items",
+            "batchSize": 250,
+            "file": {
+                "file_name": "folio_items_test_run_transform_mfhd_items.json"
+            }
+        },
+        {
+            "name": "user_transform",
+            "migrationTaskType": "UserTransformer",
+            "groupMapPath": "user_groups.tsv",
+            "userMappingFileName": "user_mapping.json",
+            "useGroupMap": true,
+            "userFile": {
+                "file_name": "staff.tsv"
+            }
+        }
+    ]
+}
