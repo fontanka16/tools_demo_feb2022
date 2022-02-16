@@ -134,14 +134,15 @@
         {
             "name": "transform_mfhd_items",
             "migrationTaskType": "ItemsTransformer",
-            "hridHandling": "default",
             "defaultCallNumberTypeName": "Library of Congress classification",
             "itemsMappingFileName": "item_mapping_for_mfhd_attached_items.json",
             "locationMapFileName": "locations.tsv",
             "materialTypesMapFileName": "material_types.tsv",
             "loanTypesMapFileName": "loan_types.tsv",
+            "itemStatusesMapFileName": "item_statuses.tsv",
             "statisticalCodesMapFileName": "statcodes.tsv",
             "callNumberTypeMapFileName": "call_number_type_mapping.tsv",
+            "hridHandling": "default",
             "files": [
                 {
                     "file_name": "items_linked_to_mfhds.csv"
